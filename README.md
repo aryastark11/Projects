@@ -1,1 +1,2 @@
-# simple python projects to improve programming and design skills
+# Python programming
+simple python projects to improve programming and design skills
