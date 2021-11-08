@@ -27,6 +27,17 @@ soup = BeautifulSoup(response.content, features="html")
 scriptList = soup.findAll('script')
 requiredSoapTag = None
 
+#required html body sub-part
+"""
+    </head>
+    <body>
+      <div id = 
+      <script>
+        window.__STATE    ## this is a string
+      </script>        
+"""       
+
+# string processing to convert it to json
 for ii in scriptList:
     if "mdc_exchangerates" in ii.decode():
         requiredSoapTag = ii
@@ -110,9 +121,6 @@ for ii in list(set(dataFrameCurrentDay['region'])):
     dataFrameChunks.append(frames.head(2))
 
 reducedDataFrame = pd.concat(dataFrameChunks)
-
-import numpy as np
-
 groupedBarPlotReduced = sns.catplot(
     data=reducedDataFrame, kind="bar",
     x="currency", y="currentValuePerUSD", hue="region",
@@ -121,4 +129,4 @@ groupedBarPlotReduced = sns.catplot(
 groupedBarPlotReduced.despine(left=True)
 groupedBarPlotReduced.set_axis_labels("region + currency", "currentValuePerUSD")
 plt.title(graphTitle)
-plt.show()        
+plt.show()
